@@ -16,7 +16,9 @@ pool.query("SELECT NOW()", (err, res) => {
 const app = express()
 
 // Middlewares
-app.use(cors())
+app.use(cors({
+  origin: "*"
+}))
 app.use(express.json())
 
 // Rutas
