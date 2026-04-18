@@ -22,12 +22,13 @@ function Proyectos() {
   const headers = { Authorization: `Bearer ${token}` }
 
   const cargarProyectos = async () => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/proyectos`, { headers })
-    } catch (err) {
-      setError("Error al cargar proyectos.")
-    }
+  try {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/proyectos`, { headers })
+    setProyectos(res.data)
+  } catch (err) {
+    setError("Error al cargar proyectos.")
   }
+}
 
   const cargarClientes = async () => {
     try {
@@ -247,6 +248,7 @@ function Proyectos() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
+              {console.log("Proyectos:", proyectos)}
               {proyectos.length === 0 ? (
                 <tr>
                   <td colSpan="6" className="text-center py-8 text-gray-400">
