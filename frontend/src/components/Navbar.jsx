@@ -29,7 +29,7 @@ function Navbar() {
         </div>
         <div className="flex items-center gap-2">
           <Link to="/dashboard" className={linkClass("/dashboard")}>
-  Dashboard
+  Menú Principal
 </Link>
           {esAdmin && (
             <Link to="/usuarios" className={linkClass("/usuarios")}>

@@ -3,12 +3,30 @@ const pool = require("../config/db")
 // Listar todos los proyectos
 const getProyectos = async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT p.*, c.Nombre as nombre_cliente 
-       FROM tb_Proyectos p
-       LEFT JOIN tb_Clientes c ON p.id_cliente = c.id_cliente
-       ORDER BY p.id_proyecto ASC`
-    )
+    const { rol, nombre } = req.user
+
+    let query
+    let params
+
+    if (rol === 1) {
+      // Administrador ve todos los proyectos
+      query = `SELECT p.*, c.Nombre as nombre_cliente 
+               FROM tb_Proyectos p
+               LEFT JOIN tb_Clientes c ON p.id_cliente = c.id_cliente
+               ORDER BY p.id_proyecto ASC`
+      params = []
+    } else {
+      // Usuario solo ve proyectos donde tiene tareas asignadas
+      query = `SELECT DISTINCT p.*, c.Nombre as nombre_cliente 
+               FROM tb_Proyectos p
+               LEFT JOIN tb_Clientes c ON p.id_cliente = c.id_cliente
+               INNER JOIN tb_Tareas t ON t.id_proyecto = p.id_proyecto
+               WHERE LOWER(t.Responsable) = LOWER($1)
+               ORDER BY p.id_proyecto ASC`
+      params = [nombre]
+    }
+
+    const result = await pool.query(query, params)
     res.json(result.rows)
   } catch (err) {
     res.status(500).json({ mensaje: "Error al obtener proyectos." })

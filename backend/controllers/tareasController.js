@@ -3,12 +3,29 @@ const pool = require("../config/db")
 // Listar todas las tareas
 const getTareas = async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT t.*, p.Nombre as nombre_proyecto 
-       FROM tb_Tareas t
-       LEFT JOIN tb_Proyectos p ON t.id_proyecto = p.id_proyecto
-       ORDER BY t.id_tarea ASC`
-    )
+    const { rol, nombre } = req.user
+
+    let query
+    let params
+
+    if (rol === 1) {
+      // Administrador ve todas las tareas
+      query = `SELECT t.*, p.Nombre as nombre_proyecto 
+               FROM tb_Tareas t
+               LEFT JOIN tb_Proyectos p ON t.id_proyecto = p.id_proyecto
+               ORDER BY t.id_tarea ASC`
+      params = []
+    } else {
+      // Usuario solo ve sus tareas asignadas
+      query = `SELECT t.*, p.Nombre as nombre_proyecto 
+               FROM tb_Tareas t
+               LEFT JOIN tb_Proyectos p ON t.id_proyecto = p.id_proyecto
+               WHERE LOWER(t.Responsable) = LOWER($1)
+               ORDER BY t.id_tarea ASC`
+      params = [nombre]
+    }
+
+    const result = await pool.query(query, params)
     res.json(result.rows)
   } catch (err) {
     res.status(500).json({ mensaje: "Error al obtener tareas." })
