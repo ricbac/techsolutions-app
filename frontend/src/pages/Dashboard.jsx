@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import Navbar from "../components/Navbar"
-
+import { useEffect, useState } from "react"
+import axios from "axios"
+import Navbar from "../components/Navbar"
+import { Link } from "react-router-dom"
 function Dashboard() {
   const [stats, setStats] = useState({
     clientes: 0,
@@ -101,7 +104,7 @@ function Dashboard() {
         {/* Accesos rápidos */}
         <h3 className="text-lg font-bold text-gray-700 mb-4">Accesos Rápidos</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <a href="/clientes" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-blue-300">
+          <Link to="/clientes" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-blue-300">
             <div className="flex items-center gap-4">
               <div className="bg-blue-100 text-blue-600 p-3 rounded-xl text-2xl">👥</div>
               <div>
@@ -109,9 +112,9 @@ function Dashboard() {
                 <p className="text-sm text-gray-400">Crear, editar y eliminar clientes</p>
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/proyectos" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-green-300">
+          <Link to="/proyectos" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-green-300">
             <div className="flex items-center gap-4">
               <div className="bg-green-100 text-green-600 p-3 rounded-xl text-2xl">📁</div>
               <div>
@@ -119,9 +122,9 @@ function Dashboard() {
                 <p className="text-sm text-gray-400">Administrar proyectos y estados</p>
               </div>
             </div>
-          </a>
+          </Link>
 
-          <a href="/tareas" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-yellow-300">
+          <Link to="/tareas" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-yellow-300">
             <div className="flex items-center gap-4">
               <div className="bg-yellow-100 text-yellow-600 p-3 rounded-xl text-2xl">📋</div>
               <div>
@@ -129,7 +132,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-400">Asignar y dar seguimiento a tareas</p>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
