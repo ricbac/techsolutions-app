@@ -38,6 +38,7 @@ app.use("/api/auth", require("./routes/auth"))
 app.use("/api/clientes", require("./routes/clientes"))
 app.use("/api/proyectos", require("./routes/proyectos"))
 app.use("/api/tareas", require("./routes/tareas"))
+app.use("/api/usuarios", require("./routes/usuarios"))
 
 // Ruta de prueba
 app.get("/", (req, res) => {
