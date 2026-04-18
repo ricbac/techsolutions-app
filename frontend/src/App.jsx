@@ -5,6 +5,7 @@ import Clientes from "./pages/Clientes"
 import Proyectos from "./pages/Proyectos"
 import Tareas from "./pages/Tareas"
 import ProtectedRoute from "./components/ProtectedRoute"
+import Usuarios from "./pages/Usuarios"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/clientes" element={<ProtectedRoute><Clientes /></ProtectedRoute>} />
         <Route path="/proyectos" element={<ProtectedRoute><Proyectos /></ProtectedRoute>} />
         <Route path="/tareas" element={<ProtectedRoute><Tareas /></ProtectedRoute>} />
+        <Route path="/usuarios" element={<ProtectedRoute><Usuarios /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   )

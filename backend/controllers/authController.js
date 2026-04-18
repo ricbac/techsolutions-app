@@ -58,4 +58,36 @@ const login = async (req, res) => {
   }
 }
 
-module.exports = { login }
+const crearUsuario = async (req, res) => {
+  const { nombre, correo, telefono, empresa, password } = req.body
+
+  try {
+    // Verificar si el correo ya existe
+    const existe = await pool.query(
+      "SELECT * FROM tb_Clientes WHERE Correo = $1",
+      [correo]
+    )
+    if (existe.rows.length > 0) {
+      return res.status(400).json({ mensaje: "El correo ya está registrado." })
+    }
+
+    // Encriptar contraseña
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    // Crear usuario con rol 2
+    const result = await pool.query(
+      `INSERT INTO tb_Clientes (Nombre, Correo, Telefono, Empresa, Estado, Password, id_Rol)
+       VALUES ($1, $2, $3, $4, 'activo', $5, 2) RETURNING *`,
+      [nombre, correo, telefono || "", empresa || "", hashedPassword]
+    )
+
+    res.status(201).json({
+      mensaje: "Usuario creado correctamente.",
+      usuario: result.rows[0]
+    })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ mensaje: "Error al crear usuario." })
+  }
+}
+module.exports = { login, crearUsuario }

@@ -4,6 +4,10 @@ function Navbar() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  const token = localStorage.getItem("token")
+  const usuario = token ? JSON.parse(atob(token.split(".")[1])) : null
+  const esAdmin = usuario?.rol === 1
+
   const handleLogout = () => {
     localStorage.removeItem("token")
     navigate("/")
@@ -24,12 +28,21 @@ function Navbar() {
           <span className="text-white text-xl font-bold">TechSolutions</span>
         </div>
         <div className="flex items-center gap-2">
-          <Link to="/dashboard" className={linkClass("/dashboard")}>
-            Menú Principal
-          </Link>
-          <Link to="/clientes" className={linkClass("/clientes")}>
+          {esAdmin && (
+            <Link to="/dashboard" className={linkClass("/dashboard")}>
+              Menú Principal
+            </Link>
+          )}
+          {esAdmin && (
+            <Link to="/usuarios" className={linkClass("/usuarios")}>
+            Usuarios
+            </Link>
+          )}
+          {esAdmin && (
+            <Link to="/clientes" className={linkClass("/clientes")}>
             Clientes
-          </Link>
+            </Link>
+          )}
           <Link to="/proyectos" className={linkClass("/proyectos")}>
             Proyectos
           </Link>
