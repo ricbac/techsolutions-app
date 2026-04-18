@@ -17,9 +17,9 @@ function Dashboard() {
     const cargarStats = async () => {
       try {
         const [clientes, proyectos, tareas] = await Promise.all([
-          axios.get("http://localhost:4000/api/clientes", { headers }),
-          axios.get("http://localhost:4000/api/proyectos", { headers }),
-          axios.get("http://localhost:4000/api/tareas", { headers })
+          axios.get(`${import.meta.env.VITE_API_URL}/api/clientes`, { headers }),
+            axios.get(`${import.meta.env.VITE_API_URL}/api/proyectos`, { headers }),
+            axios.get(`${import.meta.env.VITE_API_URL}/api/tareas`, { headers })
         ])
         setStats({
           clientes: clientes.data.length,

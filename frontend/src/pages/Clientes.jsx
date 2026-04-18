@@ -18,7 +18,7 @@ function Clientes() {
   // Cargar clientes
   const cargarClientes = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/clientes", { headers })
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/clientes`, { headers })
       setClientes(res.data)
     } catch (err) {
       setError("Error al cargar clientes.")
@@ -59,10 +59,10 @@ function Clientes() {
     e.preventDefault()
     try {
       if (clienteEditando) {
-        await axios.put(`http://localhost:4000/api/clientes/${clienteEditando}`, form, { headers })
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/clientes/${clienteEditando}`, form, { headers })
         setMensaje("Cliente actualizado correctamente.")
       } else {
-        await axios.post("http://localhost:4000/api/clientes", form, { headers })
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/clientes`, form, { headers })
         setMensaje("Cliente creado correctamente.")
       }
       setMostrarFormulario(false)
@@ -78,7 +78,7 @@ function Clientes() {
   const handleEliminar = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar este cliente?")) return
     try {
-      await axios.delete(`http://localhost:4000/api/clientes/${id}`, { headers })
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/clientes/${id}`, { headers })
       setMensaje("Cliente eliminado correctamente.")
       cargarClientes()
       setTimeout(() => setMensaje(""), 3000)

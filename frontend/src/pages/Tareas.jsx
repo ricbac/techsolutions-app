@@ -23,7 +23,7 @@ function Tareas() {
 
   const cargarTareas = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/tareas", { headers })
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/tareas`, { headers })
       setTareas(res.data)
     } catch (err) {
       setError("Error al cargar tareas.")
@@ -32,7 +32,7 @@ function Tareas() {
 
   const cargarProyectos = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/proyectos", { headers })
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/proyectos`, { headers })
       setProyectos(res.data)
     } catch (err) {
       setError("Error al cargar proyectos.")
@@ -78,10 +78,9 @@ function Tareas() {
     e.preventDefault()
     try {
       if (tareaEditando) {
-        await axios.put(`http://localhost:4000/api/tareas/${tareaEditando}`, form, { headers })
-        setMensaje("Tarea actualizada correctamente.")
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/tareas/${tareaEditando}`, form, { headers })
       } else {
-        await axios.post("http://localhost:4000/api/tareas", form, { headers })
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/tareas`, form, { headers })
         setMensaje("Tarea creada correctamente.")
       }
       setMostrarFormulario(false)
@@ -96,7 +95,7 @@ function Tareas() {
   const handleEliminar = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar esta tarea?")) return
     try {
-      await axios.delete(`http://localhost:4000/api/tareas/${id}`, { headers })
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/tareas/${id}`, { headers })
       setMensaje("Tarea eliminada correctamente.")
       cargarTareas()
       setTimeout(() => setMensaje(""), 3000)

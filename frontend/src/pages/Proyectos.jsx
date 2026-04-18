@@ -23,8 +23,7 @@ function Proyectos() {
 
   const cargarProyectos = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/proyectos", { headers })
-      setProyectos(res.data)
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/proyectos`, { headers })
     } catch (err) {
       setError("Error al cargar proyectos.")
     }
@@ -32,7 +31,7 @@ function Proyectos() {
 
   const cargarClientes = async () => {
     try {
-      const res = await axios.get("http://localhost:4000/api/clientes", { headers })
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/clientes`, { headers })
       setClientes(res.data)
     } catch (err) {
       setError("Error al cargar clientes.")
@@ -78,10 +77,10 @@ function Proyectos() {
     e.preventDefault()
     try {
       if (proyectoEditando) {
-        await axios.put(`http://localhost:4000/api/proyectos/${proyectoEditando}`, form, { headers })
+        await axios.put(`${import.meta.env.VITE_API_URL}/api/proyectos/${proyectoEditando}`, form, { headers })
         setMensaje("Proyecto actualizado correctamente.")
       } else {
-        await axios.post("http://localhost:4000/api/proyectos", form, { headers })
+        await axios.post(`${import.meta.env.VITE_API_URL}/api/proyectos`, form, { headers })
         setMensaje("Proyecto creado correctamente.")
       }
       setMostrarFormulario(false)
@@ -96,7 +95,7 @@ function Proyectos() {
   const handleEliminar = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar este proyecto?")) return
     try {
-      await axios.delete(`http://localhost:4000/api/proyectos/${id}`, { headers })
+      await axios.delete(`${import.meta.env.VITE_API_URL}/api/proyectos/${id}`, { headers })
       setMensaje("Proyecto eliminado correctamente.")
       cargarProyectos()
       setTimeout(() => setMensaje(""), 3000)
