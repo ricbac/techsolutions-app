@@ -28,11 +28,9 @@ function Navbar() {
           <span className="text-white text-xl font-bold">TechSolutions</span>
         </div>
         <div className="flex items-center gap-2">
-          {esAdmin && (
-            <Link to="/dashboard" className={linkClass("/dashboard")}>
-              Menú Principal
-            </Link>
-          )}
+          <Link to="/dashboard" className={linkClass("/dashboard")}>
+  Dashboard
+</Link>
           {esAdmin && (
             <Link to="/usuarios" className={linkClass("/usuarios")}>
             Usuarios

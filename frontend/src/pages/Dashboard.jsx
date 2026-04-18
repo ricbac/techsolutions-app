@@ -36,6 +36,7 @@ function Dashboard() {
   }, [])
 
   const usuario = JSON.parse(atob(token.split(".")[1]))
+  const esAdmin = usuario?.rol === 1
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -53,7 +54,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-500 mb-1">Total Clientes</p>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.clientes}</h3>
               </div>
-              <span className="text-3xl">👥</span>
+              <span className="text-3xl"></span>
             </div>
             <p className="text-xs text-blue-500 mt-3 font-medium">Clientes registrados</p>
           </div>
@@ -64,7 +65,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-500 mb-1">Total Proyectos</p>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.proyectos}</h3>
               </div>
-              <span className="text-3xl">📁</span>
+              <span className="text-3xl"></span>
             </div>
             <p className="text-xs text-green-500 mt-3 font-medium">Proyectos activos</p>
           </div>
@@ -75,7 +76,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-500 mb-1">Total Tareas</p>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.tareas}</h3>
               </div>
-              <span className="text-3xl">📋</span>
+              <span className="text-3xl"></span>
             </div>
             <p className="text-xs text-yellow-500 mt-3 font-medium">Tareas en sistema</p>
           </div>
@@ -86,7 +87,7 @@ function Dashboard() {
                 <p className="text-sm text-gray-500 mb-1">Tareas Completadas</p>
                 <h3 className="text-3xl font-bold text-gray-800">{stats.tareasCompletadas}</h3>
               </div>
-              <span className="text-3xl">✅</span>
+              <span className="text-3xl"></span>
             </div>
             <p className="text-xs text-purple-500 mt-3 font-medium">
               {stats.tareas > 0
@@ -95,39 +96,40 @@ function Dashboard() {
             </p>
           </div>
         </div>
-
         <h3 className="text-lg font-bold text-gray-700 mb-4">Accesos Rápidos</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Link to="/clientes" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-blue-300">
-            <div className="flex items-center gap-4">
-              <div className="bg-blue-100 text-blue-600 p-3 rounded-xl text-2xl">👥</div>
-              <div>
-                <h4 className="font-semibold text-gray-800">Gestión de Clientes</h4>
-                <p className="text-sm text-gray-400">Crear, editar y eliminar clientes</p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/proyectos" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-green-300">
-            <div className="flex items-center gap-4">
-              <div className="bg-green-100 text-green-600 p-3 rounded-xl text-2xl">📁</div>
-              <div>
-                <h4 className="font-semibold text-gray-800">Gestión de Proyectos</h4>
-                <p className="text-sm text-gray-400">Administrar proyectos y estados</p>
-              </div>
-            </div>
-          </Link>
-
-          <Link to="/tareas" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-yellow-300">
-            <div className="flex items-center gap-4">
-              <div className="bg-yellow-100 text-yellow-600 p-3 rounded-xl text-2xl">📋</div>
-              <div>
-                <h4 className="font-semibold text-gray-800">Gestión de Tareas</h4>
-                <p className="text-sm text-gray-400">Asignar y dar seguimiento a tareas</p>
-              </div>
-            </div>
-          </Link>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  {esAdmin && (
+    <Link to="/clientes" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-blue-300">
+      <div className="flex items-center gap-4">
+        <div className="bg-blue-100 text-blue-600 p-3 rounded-xl text-2xl"></div>
+        <div>
+          <h4 className="font-semibold text-gray-800">Gestión de Clientes</h4>
+          <p className="text-sm text-gray-400">Crear, editar y eliminar clientes</p>
         </div>
+      </div>
+    </Link>
+  )}
+
+  <Link to="/proyectos" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-green-300">
+    <div className="flex items-center gap-4">
+      <div className="bg-green-100 text-green-600 p-3 rounded-xl text-2xl"></div>
+      <div>
+        <h4 className="font-semibold text-gray-800">Gestión de Proyectos</h4>
+        <p className="text-sm text-gray-400">Administrar proyectos y estados</p>
+      </div>
+    </div>
+  </Link>
+
+  <Link to="/tareas" className="bg-white rounded-xl shadow p-6 hover:shadow-md transition cursor-pointer border border-gray-100 hover:border-yellow-300">
+    <div className="flex items-center gap-4">
+      <div className="bg-yellow-100 text-yellow-600 p-3 rounded-xl text-2xl"></div>
+      <div>
+        <h4 className="font-semibold text-gray-800">Gestión de Tareas</h4>
+        <p className="text-sm text-gray-400">Asignar y dar seguimiento a tareas</p>
+      </div>
+    </div>
+  </Link>
+</div>
       </div>
     </div>
   )
